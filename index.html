@@ -7,20 +7,54 @@
     <style>
       /* تعديل حاوية الكويز لتكون في المنتصف */
       #quiz {
+        width: 100%;
         max-width: 600px;
-        margin: 20px auto; /* توسيط أفقي */
+        min-height: 70vh;
+        margin: 0 auto;
         display: flex;
         flex-direction: column;
         justify-content: center;
         align-items: center;
+        box-sizing: border-box;
       }
+      @media (max-width: 600px) {
+        body {
+          padding: 10px;
+        }
 
+        #quiz {
+          width: 100%;
+          min-height: 80vh;
+          margin: 0 auto;
+          justify-content: center;
+        }
+
+        #question-container {
+          width: 100%;
+        }
+
+        #question-container h2 {
+          text-align: center;
+          font-size: 25px;
+          line-height: 1.7;
+        }
+
+        #quiz form {
+          width: 100%;
+        }
+
+        #next-button {
+          width: 100%;
+          margin-top: 20px;
+        }
+      }
       /* إلغاء التثبيت في الزاوية وجعله تحت الأسئلة */
       #next-button {
-        display: block;
-        width: 100%; /* ليأخذ عرض الحاوية */
-        margin-top: 20px; /* مسافة بينه وبين الخيارات */
-        padding: 12px;
+        width: 120px;
+        margin-top: 20px;
+        margin-right: auto;
+        margin-left: 0;
+        padding: 10px;
         background-color: #007bff;
         color: white;
         border: none;
@@ -28,7 +62,7 @@
         cursor: pointer;
         font-size: 18px;
         font-weight: bold;
-        position: static; /* إلغاء الـ fixed القديم */
+        position: static;
       }
 
       /* تحسين شكل الخيارات عند الاختيار */
@@ -214,6 +248,7 @@
           padding: 10px;
           border-radius: 10px;
           margin-bottom: 15px;
+          gap: 30px;
         "
       >
         <div id="timer">5:00</div>
