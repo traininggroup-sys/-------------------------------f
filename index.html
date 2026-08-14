@@ -1,0 +1,484 @@
+<!doctype html>
+<html lang="ar">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>اختبار تدريبي - جروب المشتركين</title>
+    <style>
+      /* تعديل حاوية الكويز لتكون في المنتصف */
+      #quiz {
+        max-width: 600px;
+        margin: 20px auto; /* توسيط أفقي */
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+      }
+
+      /* إلغاء التثبيت في الزاوية وجعله تحت الأسئلة */
+      #next-button {
+        display: block;
+        width: 100%; /* ليأخذ عرض الحاوية */
+        margin-top: 20px; /* مسافة بينه وبين الخيارات */
+        padding: 12px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+        font-size: 18px;
+        font-weight: bold;
+        position: static; /* إلغاء الـ fixed القديم */
+      }
+
+      /* تحسين شكل الخيارات عند الاختيار */
+      input[type="radio"]:checked + label {
+        background-color: #e7f1ff !important;
+        border-color: #007bff !important;
+      }
+      body {
+        font-family: Arial, sans-serif;
+        direction: rtl;
+        font-weight: 900;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        background-color: #f8f9fa;
+        margin: 0;
+        padding: 13px;
+      }
+
+      .header-box {
+        background-color: #fff;
+        border: 2px solid #28a745;
+        border-radius: 15px;
+        padding: 10px;
+        margin-bottom: 20px;
+        text-align: center;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      }
+
+      .header-box h1 {
+        color: #28a745;
+        font-size: 24px;
+        margin-bottom: 10px;
+      }
+      .header-box p {
+        color: #555;
+        font-size: 18px;
+        line-height: 1.6;
+      }
+
+      .links-container {
+        display: flex;
+        justify-content: center;
+        gap: 10px;
+        margin-top: 15px;
+        flex-wrap: wrap;
+      }
+
+      .btn-link {
+        text-decoration: none;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+        font-size: 18px;
+        transition: opacity 0.3s;
+      }
+
+      .tg-btn {
+        background-color: #0088cc;
+      }
+      .fb-btn {
+        background-color: #1877f2;
+      }
+
+      .hidden {
+        display: none !important;
+      }
+
+      #login-container {
+        max-width: 400px;
+        margin: 50px auto;
+        padding: 30px;
+        background-color: #ffffff;
+        border: 2px solid #007bff;
+        border-radius: 15px;
+        box-shadow: 0 5px 25px rgba(0, 123, 255, 0.2);
+        text-align: center;
+      }
+
+      #login-container input {
+        width: 100%;
+        padding: 12px;
+        margin-bottom: 20px;
+        font-size: 16px;
+        border: 1px solid #ccc;
+        border-radius: 8px;
+        box-sizing: border-box;
+      }
+
+      #login-container button {
+        width: 100%;
+        background-color: #007bff;
+        color: white;
+        padding: 12px 0;
+        font-size: 18px;
+        font-weight: bold;
+        border: none;
+        border-radius: 8px;
+        cursor: pointer;
+      }
+
+      #timer {
+        font-size: 20px;
+        color: red;
+        font-weight: bold;
+      }
+      #next-button {
+        padding: 10px 30px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+      }
+
+      .correct-answer {
+        color: green;
+        font-weight: 900;
+      }
+      .wrong-answer {
+        color: red;
+        font-weight: 900;
+      }
+
+      .feedback-msg {
+        font-size: 22px;
+        margin: 15px 0;
+        padding: 10px;
+        border-radius: 10px;
+        background: #f0fdf4;
+        color: #166534;
+        border: 1px dashed #28a745;
+      }
+
+      ul {
+        list-style-type: none;
+        padding: 0;
+      }
+      ul li {
+        margin-bottom: 15px;
+        background-color: #f0f4f8;
+        padding: 15px;
+        border-radius: 8px;
+        border-right: 5px solid #007bff;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="info-header" class="header-box">
+      <h1>🎁 هدية القناة العامة</h1>
+      <p>
+        هذا الاختبار هو جزء من تدريبات <b>جروب المشتركين للتدريب</b> علي اختبار
+        الجهاز المركزي للتنظيم والإدارة.<br />
+        تم فتحه مجاناً لجميع متابعينا. لمتابعة أحدث آراء الممتحنين والأسئلة
+        يومياً، انضم إلينا عبر الروابط التالية:
+      </p>
+      <div class="links-container">
+        <a
+          href="https://www.facebook.com/share/p/1J118pxXnq/"
+          class="btn-link fb-btn"
+          >👥دوس هنا</a
+        >
+      </div>
+    </div>
+
+    <div id="login-container">
+      <h2 style="margin-top: 0">بيانات الدخول</h2>
+      <label>🔒 كلمة المرور (7):</label>
+      <input id="password" type="password" placeholder="اكتب 7 بالانجليزي" />
+      <label>⏳ مدة الاختبار (بالدقائق):</label>
+      <input id="duration" type="number" value="5" min="1" />
+      <button onclick="checkPassword()">🚀 ابدأ الاختبار الآن</button>
+    </div>
+
+    <div class="hidden" id="quiz">
+      <div
+        style="
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          background: white;
+          padding: 10px;
+          border-radius: 10px;
+          margin-bottom: 15px;
+        "
+      >
+        <div id="timer">5:00</div>
+        <div id="question-info">السؤال 1 من 20</div>
+      </div>
+      <form id="quizForm">
+        <div id="question-container"></div>
+        <button id="next-button" onclick="nextQuestion(event)" type="button">
+          التالي
+        </button>
+      </form>
+    </div>
+
+    <div class="hidden" id="result"></div>
+
+    <script>
+      const questions = [
+        {
+          question:
+            "يتم استخدام Microsoft Excel (الجداول الإلكترونية) لـ.....؟",
+          options: ["تحليل", "المحاسبة", "الميزانية", "كل ما سبق"],
+          answer: "كل ما سبق",
+        },
+        {
+          question:
+            "أي من البرامج التالية يُستخدم لإنشاء جداول لتنظيم البيانات في المدرسة؟",
+          options: ["Access", "POWERPOINT", "WORD", "EXCEL"],
+          answer: "EXCEL",
+        },
+        {
+          question: "الملف الذي يحتوي على عدد من أوراق العمل يُسمى؟",
+          options: ["ورقة عمل", "خلية", "مصنف (Workbook)", "جدول"],
+          answer: "مصنف (Workbook)",
+        },
+        {
+          question: "الصف في برنامج Excel نرمز له بـ.........",
+          options: ["رقم", "حرف", "لا شيء"],
+          answer: "رقم",
+        },
+        {
+          question: "العمود في برنامج Excel نرمز له بـ........",
+          options: ["رقم", "حرف", "لا شيء"],
+          answer: "حرف",
+        },
+        {
+          question: "أصغر وحدة في ورقة العمل تسمى ........",
+          options: ["صفحة", "ورقة العمل", "المصنف", "خلية"],
+          answer: "خلية",
+        },
+        {
+          question:
+            "ما الاسم الذي يُطلق على تقاطع الصف مع العمود في ورقة العمل؟",
+          options: ["جدول", "خلية cell", "ورقة العمل", "مصنف"],
+          answer: "خلية cell",
+        },
+        {
+          question: "في الجداول الإلكترونية يتم تحديد عنوان الخلية من خلال؟",
+          options: [
+            "حرف الصف وحرف العمود",
+            "رقم العمود ورقم الصف",
+            "حرف العمود ورقم الصف",
+            "رقم العمود وحرف الصف",
+          ],
+          answer: "حرف العمود ورقم الصف",
+        },
+        {
+          question: "الاسم الافتراضي لورقة العمل في EXCEL هو؟",
+          options: ["Sheet1 ورقة1", "ورقة", "worksheet one", "A1"],
+          answer: "Sheet1 ورقة1",
+        },
+        {
+          question: "في Excel، أي خيار يشير إلى نطاق من B1 إلى E5؟",
+          options: ["B1 - E5", "B1 to E5", "B1:E5", "B1$E5"],
+          answer: "B1:E5",
+        },
+        {
+          question: "الخلية AF17 في EXCEL عبارة عن؟",
+          options: ["ورقة AF", "صف AF مع عمود 17", "عمود AF مع صف 17"],
+          answer: "عمود AF مع صف 17",
+        },
+        {
+          question: "الخلية AA23 معناها؟",
+          options: [
+            "عمود A وصف 23",
+            "عمود AA مع صف 23",
+            "خلية في الصف الاول",
+            "AA في كل الصفوف",
+          ],
+          answer: "عمود AA مع صف 23",
+        },
+        {
+          question: "عنوان الخلية A5 هي؟",
+          options: ["5A", "AA2", "A5", "a5"],
+          answer: "A5",
+        },
+        {
+          question: "عدد الصفوف في ورقة العمل؟ (الإصدارات الحديثة)",
+          options: ["26", "256", "1,048,576", "12,834"],
+          answer: "1,048,576",
+        },
+        {
+          question: "عرض العمود في ورقة العمل؟",
+          options: ["26 حرف", "255 حرف", "128 حرف", "256 حرف"],
+          answer: "255 حرف",
+        },
+        {
+          question: "الحد الأقصى لعدد الأحرف في الخلية الواحدة؟",
+          options: ["32,768 حرف", "65,535 حرف", "1,32,767 حرف", "32,767 حرف"],
+          answer: "32,767 حرف",
+        },
+        {
+          question: "ما هو اسم آخر عمود في ورقة العمل ببرنامج EXCEL؟",
+          options: ["ZZZ", "XFD", "ZYX", "XLL"],
+          answer: "XFD",
+        },
+        {
+          question: "يمكن التحكم في عرض العمود وتصغيره؟",
+          options: ["صح", "خطأ"],
+          answer: "صح",
+        },
+        {
+          question:
+            "أي خيار يتيح لك عرض جميع الأرقام التي هي أقل من 0 (الأرقام السالبة) باللون الأحمر في MS Excel؟",
+          options: [
+            "التنسيق",
+            "التنسيق الشرطي",
+            "مقارنة التنسيق",
+            "التنسيق الخاص",
+          ],
+          answer: "التنسيق الشرطي",
+        },
+        {
+          question: "اسم الورقة في برنامج Excel عبارة عن صف وعمود؟",
+          options: [
+            "أ. Workbook",
+            "ب. worksheet",
+            "ج. Sheet",
+            "د. الاختيار (ب) و (ج) معا",
+          ],
+          answer: "د. الاختيار (ب) و (ج) معا",
+        },
+      ];
+
+      let currentQuestion = 0;
+      let score = 0;
+      let timer;
+      let timeLeft;
+      let userAnswers = [];
+
+      function shuffle(array) {
+        for (let i = array.length - 1; i > 0; i--) {
+          const j = Math.floor(Math.random() * (i + 1));
+          [array[i], array[j]] = [array[j], array[i]];
+        }
+      }
+
+      function checkPassword() {
+        const passwordInput = document.getElementById("password").value;
+        const durationInput =
+          parseInt(document.getElementById("duration").value) || 5;
+        timeLeft = durationInput * 60;
+        if (passwordInput === "7") {
+          shuffle(questions);
+          // إخفاء الهيدر ومربع الدخول
+          document.getElementById("info-header").classList.add("hidden");
+          document.getElementById("login-container").classList.add("hidden");
+          // إظهار الكويز
+          document.getElementById("quiz").classList.remove("hidden");
+          loadQuestion();
+          startTimer();
+        } else {
+          alert("🚫 كلمة السر خاطئة! الكلمة هي 7");
+        }
+      }
+
+      function loadQuestion() {
+        const questionContainer = document.getElementById("question-container");
+        const q = questions[currentQuestion];
+        questionContainer.innerHTML = `
+          <h2>${q.question}</h2>
+          ${q.options
+            .map(
+              (opt) => `
+            <label style="display:block; background:white; padding:10px; margin:10px 0; border-radius:5px; cursor:pointer; border:1px solid #ddd;">
+              <input type="radio" name="option" value="${opt}"> ${opt}
+            </label>
+          `,
+            )
+            .join("")}
+        `;
+        document.getElementById("question-info").textContent =
+          `السؤال ${currentQuestion + 1} من ${questions.length}`;
+      }
+
+      function nextQuestion(event) {
+        const selected = document.querySelector('input[name="option"]:checked');
+        if (!selected) return alert("من فضلك اختر إجابة!");
+        userAnswers[currentQuestion] = selected.value;
+        if (selected.value === questions[currentQuestion].answer) score++;
+        currentQuestion++;
+        if (currentQuestion < questions.length) {
+          loadQuestion();
+        } else {
+          showResults();
+        }
+      }
+
+      function showResults() {
+        clearInterval(timer);
+        // إخفاء الكويز
+        document.getElementById("quiz").classList.add("hidden");
+        // إظهار الهيدر مرة أخرى في صفحة النتيجة
+        document.getElementById("info-header").classList.remove("hidden");
+
+        const res = document.getElementById("result");
+        res.classList.remove("hidden");
+        const percent = ((score / questions.length) * 100).toFixed(1);
+
+        let feedbackText = "";
+        if (percent >= 90) {
+          feedbackText = "🌟 برافو نتيجتك حلوة جدا";
+        } else if (percent >= 75) {
+          feedbackText = "👏 مش بطال عاش";
+        } else if (percent >= 50) {
+          feedbackText = "👍 كويس.. لكن محتاج مراجعة بسيطة لتقوية نقاط ضعفك.";
+        } else {
+          feedbackText =
+            "📚 شد حيلك شوية! راجع الإجابات تحت بتركيز وحاول تاني.";
+        }
+
+        res.innerHTML = `
+          <div style="background:white; padding:20px; border-radius:15px; box-shadow:0 5px 15px rgba(0,0,0,0.1)">
+            <h2>النتيجة النهائية: ${score} من ${questions.length} (${percent}%)</h2>
+            <div class="feedback-msg">${feedbackText}</div>
+            <p>📸 خد سكرين شوت لنتيجتك وابعتهالنا في جروب التعليقات</p>
+            <hr>
+            <h3>مراجعة الإجابات:</h3>
+            <ul>
+              ${questions
+                .map(
+                  (q, i) => `
+                <li>
+                  <strong>س${i + 1}:</strong> ${q.question}<br>
+                  إجابتك: <span class="${userAnswers[i] === q.answer ? "correct-answer" : "wrong-answer"}">${userAnswers[i] || "لم تجب"}</span><br>
+                  الإجابة الصحيحة: <span class="correct-answer">${q.answer}</span>
+                </li>
+              `,
+                )
+                .join("")}
+            </ul>
+            <button onclick="location.reload()" style="padding:15px 30px; background:#28a745; color:white; border:none; border-radius:5px; cursor:pointer;">إعادة الاختبار</button>
+          </div>
+        `;
+      }
+
+      function startTimer() {
+        timer = setInterval(() => {
+          timeLeft--;
+          let min = Math.floor(timeLeft / 60);
+          let sec = timeLeft % 60;
+          document.getElementById("timer").textContent =
+            `${min}:${sec < 10 ? "0" : ""}${sec}`;
+          if (timeLeft <= 0) showResults();
+        }, 1000);
+      }
+    </script>
+  </body>
+</html>
