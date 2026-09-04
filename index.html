@@ -485,7 +485,7 @@
         const durationInput =
           parseInt(document.getElementById("duration").value) || 5;
         timeLeft = durationInput * 60;
-        if (passwordInput === "7") {
+        if (passwordInput === "12") {
           shuffle(questions);
           // إخفاء الهيدر ومربع الدخول
           document.getElementById("info-header").classList.add("hidden");
@@ -495,7 +495,10 @@
           loadQuestion();
           startTimer();
         } else {
-          alert("🚫 كلمة السر خاطئة! الكلمة هي 7");
+          // alert("🚫 كلمة السر خاطئة! الكلمة هي 7");
+          alert(
+            "⏰ وقت الاختبار انتهى!\n\nماتستناش الاختبار الجاي. انضم لجروب المشتركين واختبر نفسك في أي وقت على أهم أسئلة الجهاز المركزي.\n\nكلمنا واعرف سعر الاشتراك وابدأ مذاكرتك:\n0 11 1917 1596",
+          );
         }
       }
 
